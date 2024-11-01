@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head><meta charset="UTF-8"></head>
+    <link rel="stylesheet" href="https://unpkg.com/@xterm/xterm/css/xterm.css" />
+<body>
+    <div id="terminal"></div>
+    <script src="coi-serviceworker.js"></script>
+    <script src="https://unpkg.com/@xterm/xterm@latest/lib/xterm.js"></script>
+    <script src="https://unpkg.com/xterm-pty@latest/index.js"></script>
+    <script type="text/javascript">
+    const term = new Terminal({ rows: 40, cols: 80 });
+    term.open(document.getElementById("terminal"));
+    const { master, slave } = openpty();
+    term.loadAddon(master);
+    var Module = {
+        print(...args) {
+            slave.write(args.join(' ') + "\n");
+        }
+    };
+    </script>
+    <script src="dist/donut_async.js"></script>
+</body>
+</html>
+
